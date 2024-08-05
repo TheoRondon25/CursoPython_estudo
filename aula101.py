@@ -7,3 +7,14 @@
 # padrão
 # O python conhece todos os módulos e pacotes presentes
 # nos caminhos de sys.path
+import aula101_m
+from aula101_m import soma, variavel_modulo
+# criando outra aula para importar o modulo
+
+# print('Este módulo se chama', __name__)
+
+print(aula101_m.variavel_modulo)
+print(variavel_modulo)
+
+print(soma(2, 3))
+print(aula101_m.soma(2, 3))
