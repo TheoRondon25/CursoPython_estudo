@@ -8,7 +8,9 @@
 # desfazer = [] -> Refazer ['caminhar', 'fazer café']
 # refazer = todo ['fazer café']
 # refazer = todo ['fazer café', 'caminhar']
+# EXERCICIO DE AGORA -> SALVAR OS DADOS EM UM JSON
 import os
+import json
 
 def listar(tarefas):
     print()
@@ -62,8 +64,25 @@ def adicionar(entrada, tarefas):
     print()
     listar(tarefas)
 
+# LENDO JSON (SE NAO TIVER NENHUM, CRIA O ARQUIVO PUXANDO A FUNÇAO SALVAR)
+def ler(tarefas, caminho_arquivo):
+    dados = []
+    try:
+        with open(caminho_arquivo, 'r', encoding='utf8') as arquivo:
+            dados = json.load(arquivo)
+    except FileNotFoundError:
+        salvar(tarefas, caminho_arquivo)
+    return dados
 
-tarefas = []
+# CRIANDO E SALVANDO JSON
+def salvar(tarefas, caminho_arquivo):
+    dados = tarefas
+    with open(caminho_arquivo, 'w', encoding='utf8') as arquivo:
+        dados = json.dump(tarefas, arquivo, indent=2, ensure_ascii=False)
+    return dados
+
+CAMINHO_ARQUIVO = 'aula124.json'
+tarefas = ler([], CAMINHO_ARQUIVO)
 tarefas_refazer = []
 
 
@@ -80,22 +99,8 @@ while True:
     }
     comando = comandos.get(entrada) if comandos.get(entrada) is not None else comandos['adicionar']
     comando()
+    salvar(tarefas, CAMINHO_ARQUIVO)
 
-    # if entrada.lower() == 'listar':
-    #     listar(tarefas)
-    #     continue
-    # elif entrada.lower() == 'desfazer':
-    #     desfazer(tarefas, tarefas_refazer)
-    #     continue
-    # elif entrada.lower() == 'refazer':
-    #     refazer(tarefas, tarefas_refazer)  
-    #     continue
-    # elif entrada == 'cls':
-    #     os.system('cls')
-    #     continue
-    # else:
-    #     adicionar(entrada, tarefas)
-    #     continue
 
 
 
